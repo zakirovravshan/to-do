@@ -1,5 +1,8 @@
 .App {
+  padding: 40px 50px 200px;
   text-align: center;
+  font-family: 'Poppins', sans-serif;
+  
 }
 
 .App-logo {
@@ -35,4 +38,123 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+
+.todo__title{
+  color: #fff;
+  margin: 0;
+  margin-bottom: 20px;
+}
+.todo__inp{
+  border: 1px solid transparent;
+  padding:  7px 10px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  outline: none;
+}
+
+.todo__submit{
+  border: 1px solid #fff;
+  padding: 7px 8px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  outline-color: #458FF4;
+  background-color: #458FF4;
+  color: #fff;
+  font-weight: 600;
+}
+.todo__list{
+  list-style-type: none;
+  padding: 0;
+}
+
+
+.container{
+  width: 100%;
+  max-width: 450px;
+  padding: 20px;
+  margin:  0 auto;
+  background-color: #458FF4;
+  border-radius: 16px;
+}
+.todo__item{
+  width: 380px;
+  max-width: 380px;
+
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 5px 10px;
+ background-color: #c5e0e5;
+ margin: 0 auto;
+ margin-bottom: 8px;
+ border-radius: 16px;
+}
+.text__wrapper{ width: 100%;
+  max-width: 200px ;
+  display: flex;
+  align-items: center;
+}
+.todo__number{
+  display: inline-block;
+  width: 13px;
+  border: 1px  solid white;
+  border-radius: 50%;
+  font-size: 8px;
+  background-color: #fff;
+  font-weight: 600;
+  color:#00607a ;
+
+}
+.todo__text{
+  margin-left: 5px;
+  color: #111;
+
+}
+.todo__text::first-letter{
+  text-transform: capitalize;
+
+}
+.btn__wrapper{
+  width: 100%;
+  max-width: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.todo__delete{
+  width: 100%;
+  max-width: 40px;
+  background-color: transparent ;
+  color: #fff;
+  padding: 0px;
+  /* border: 1px solid #fff; */
+  border: 1px solid transparent;
+  border-radius: 8px;
+
+  font-size: 8px;
+}
+.todo__delete:active{
+  box-shadow: none;
+}
+.todo__edit{
+
+  font-size: 8px;
+  width: 100%;
+  max-width: 40px;
+  background-color: transparent ;
+  color: #fff;
+  padding: 0px;
+  /* border: 1px solid #fff; */
+  border: 1px solid transparent;
+  border-radius: 8px;
+ 
+}
+.todo__edit:active{
+  box-shadow: none;
+}
+
+.line{
+  text-decoration: line-through;
 }
