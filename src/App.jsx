@@ -38,7 +38,7 @@ function App() {
     if (evt.target.matches(".imgedit")){
       let todoId = evt.target.dataset.id
  
-      let elEdit = prompt("Edit text TO-DO", "");
+      let elEdit = prompt("EDIT TEXT TO-DO", "");
      
       let findedItem = todos.find((el) => el.id == todoId)
       
@@ -48,10 +48,7 @@ function App() {
     setTodos(todos.map((item) => item))
   }
 
-  let editItem = (evt) =>{
-    evt.preventDefault()
-    
-  }
+ 
 
 
   return (
@@ -74,8 +71,8 @@ function App() {
                 <span className='todo__text'  data-id={item.id} >{item.text}</span>
                 </div>
                 <div className='btn__wrapper'>
-                <button className='todo__edit' data-id={item.id}><img data-id={item.id} className='imgedit' src={edit} alt="" width={23} height={23} /></button>
-                <button className='todo__delete' data-id={item.id}> <img className='imgdel' src={del} alt="" width={20} height={20} /> </button>
+                <button className='todo__edit' ><img data-id={item.id} className='imgedit' src={edit} alt="" width={23} height={23} /></button>
+                <button className='todo__delete' data-id={item.id}> <img data-id={item.id} className='imgdel' src={del} alt="" width={20} height={20} /> </button>
                 </div>
               </li>
             ))
