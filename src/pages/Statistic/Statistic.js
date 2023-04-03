@@ -59,7 +59,7 @@ export const Statistic = () => {
 							className='text-center mx-auto'
 							options={options}
 							series={series}
-							type='donut'
+							type='pie'
 							width='120%'
 							heigh={300}
 						/>
