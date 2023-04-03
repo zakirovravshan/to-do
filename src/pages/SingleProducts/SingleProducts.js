@@ -1,18 +1,18 @@
 import { Button } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
-import { toast, Toaster } from 'react-hot-toast';
-import { MdDeleteOutline } from 'react-icons/md';
+import { useNavigate, useParams } from 'react-router-dom';
+import { MdOutlineArrowBack } from 'react-icons/md';
+import { BiEditAlt } from 'react-icons/bi';
 import ReactModal from 'react-modal';
-import { Link, useParams } from 'react-router-dom';
-import AddImg from '../../images/plus.png';
+import { Toaster, toast } from 'react-hot-toast';
 import CloseIcon from '@mui/icons-material/Close';
 
-
-export const CategorySingle = () => {
-	const [product, setProduct] = useState([]);
-	const { id } = useParams();
+export const SingleProducts = () => {
+	const { id, categoryId } = useParams();
+	const [product, setProduct] = useState({});
 	const [modal, setModal] = useState(false);
+	const navigate = useNavigate();
 
 	const nameRef = useRef();
 	const apiRef = useRef();
@@ -22,11 +22,28 @@ export const CategorySingle = () => {
 	const saeRef = useRef();
 	const typeRef = useRef();
 
+	const fetchproduct = () => {
+		axios
+			.get(
+				`https://641a8c8df398d7d95d59328a.mockapi.io//category/${categoryId}/products/${id}`,
+			)
+			.then((res) => setProduct(res.data))
+			.catch((error) => console.log(error));
+	};
+
+	useEffect(() => {
+		fetchproduct();
+	}, []);
+
+	const handleEdit = () => {
+		setModal(true);
+	};
+
 	const handleSubmit = (evt) => {
 		evt.preventDefault();
 		axios
-			.post(
-				`https://641a8c8df398d7d95d59328a.mockapi.io/category/${id}/products`,
+			.put(
+				`https://641a8c8df398d7d95d59328a.mockapi.io//category/${categoryId}/products/${id}`,
 				{
 					name: nameRef.current.value,
 					img: imgRef.current.value,
@@ -38,105 +55,102 @@ export const CategorySingle = () => {
 				},
 			)
 			.then((res) => {
-				if (res.status === 201) {
+				if (res.status === 200) {
 					setModal(false);
 					fetchproduct();
-					toast.success(`Maxsulot muvaffaqiyatli qo'shildi !`);
-				}
-			})
-			.catch((error) => console.log(error));
-	};
-
-	const fetchproduct = () => {
-		axios
-			.get(
-				`https://641a8c8df398d7d95d59328a.mockapi.io/category/${id}/products`,
-			)
-			.then((res) => {
-				setProduct(res.data);
-				console.log(res.data);
-			})
-			.catch((error) => console.log(error));
-	};
-
-	useEffect(() => {
-		fetchproduct();
-	}, [id]);
-
-	const handleDelete = (idp) => {
-		axios
-			.delete(
-				`https://641a8c8df398d7d95d59328a.mockapi.io/category/${id}/products/` +
-					idp,
-			)
-			.then((res) => {
-				if (res.status === 200) {
-					fetchproduct();
-					toast(`Maxsulot  O'chirildi`, {
-						icon: '🚮',
-					});
+					toast.success(`Maxsulot malumotlari muvaffaqiytali ozgartirildi  !`);
 				}
 			})
 			.catch((error) => console.log(error));
 	};
 
 	return (
-		<div>
+		<div className='bg-slate-200 p-8 h-screen'>
 			<Toaster />
-		
-				<ul
-					style={{ maxHeight: '430px', overflowY: 'auto', }}
-					className=' w-full bg-slate-100 p-7  pt-9 rounded-xl shadow-md text-center  	'>
-					<Button
-						style={{
-							borderRadius: '50%',
-							padding: '0px',
-							position: 'absolute',
-							top: '247px',
-						}}
-						className=' p-0 mx-auto block z-10 '
-						onClick={() => setModal(true)}>
-						<img
-							className='rounded-full'
-							src={AddImg}
-							alt=' add img'
-							width={'55px'}
-						/>
+			<div className='flex items-center justify-between mb-8'>
+				<div
+					style={{ height: '55px' }}
+					className='flex items-center justify-between w-100 '>
+					<Button className='block' onClick={() => navigate(-1)}>
+						<MdOutlineArrowBack size={'32px'} />
 					</Button>
-					{product.length ? (
-						product.map((el) => (
-							<div className='relative '>
-								<Link
-									to={`/product/${id}/singleproduct/${el.id}`}
-									key={el.id}
-									className=' border border-b-2 p-3  justify-between    bg-white rounded-xl mb-1 flex items-center hover:shadow-xl transition duration-500'>
-									<div className='flex items-center w-full '>
-										<p className='mr-1'>{product.indexOf(el) + 1}. </p>
-										<div style={{ maxWidth: 'auto' }}>
-											<img
-												className='block mx-auto object-cover'
-												style={{ maxHeight: '67px', width: 'auto' }}
-												src={el.img}
-												alt=''
-											/>
-										</div>
-										<p className='ms-2'>{el.name}</p>
-									</div>
-								</Link>
-								<div className='absolute top-7 right-3 '>
-									<Button color='error' onClick={() => handleDelete(el.id)}>
-										<MdDeleteOutline size={'30px'} color='red' />
-									</Button>
-								</div>
-							</div>
-						))
-					) : (
-						<div className='mx-auto text-center'>
-							<p> Maxsulot kategroiyasini tanlang ! </p>
+				</div>
+			</div>
+			<div className=''>
+				<Button style={{ position: 'absolute' , right:"40px" , top:"130px" }} onClick={() => handleEdit()}>
+					<BiEditAlt size={'35px'} color='orange' />
+				</Button>
+				<ul
+					style={{ minHeight: '580px', maxHeight: '581px' }}
+					className=' w-full bg-white p-7 pt-3 rounded-xl shadow-md  flex pt-10 '>
+					<li className='flex items-start justify-between w-full'>
+						<div
+							style={{
+								maxWidth: '300px',
+								width: '100%',
+								maxHeight: '510px',
+								height: '100%',
+							}}
+							className='mt-3 text-center '>
+							<img
+								style={{
+									objectFit: 'contain',
+									maxHeight: '510px',
+									height: '100%',
+								}}
+								className='object-contain block mx-auto'
+								src={product.img}
+								alt={product.name}
+							/>
 						</div>
-					)}
+						<div className='text-slate-800 p-7 w-3/4'>
+							<h3
+								style={{ color: '#0f3d7b' }}
+								className='text-3xl font-medium mb-4'>
+								{product.name}
+							</h3>
+							<h4 style={{ color: '#0f3d7b' }} className='text-lg font-medium'>
+								Описание :
+							</h4>
+							<div style={{ maxHeight: '200px', overflow: 'auto' }}>
+								<p
+									style={{ maxWidth: '100%', overflow: 'scroll' }}
+									className='text-base italic'>
+									{product.description}
+								</p>
+							</div>
+							<h4 style={{ color: '#0f3d7b' }} className='text-lg font-medium'>
+								Тип :
+							</h4>
+							<p
+								style={{ maxWidth: '100%', overflow: 'scroll' }}
+								className='text-base'>
+								{product.type}
+							</p>
+							<h4 style={{ color: '#0f3d7b' }} className='text-lg font-medium'>
+								Вязкость :
+							</h4>
+							<p
+								style={{ maxWidth: '100%', overflow: 'scroll' }}
+								className='text-base'>
+								{product.sae}
+							</p>
+							<div style={{ maxHeight: '80px', overflow: 'auto' }}>
+								<h4
+									style={{ color: '#0f3d7b' }}
+									className='text-lg font-medium'>
+									Лицензии/Соответствия :
+								</h4>
+								<p
+									style={{ maxWidth: '100%', overflow: 'scroll' }}
+									className='text-base'>
+									{product.approvals}
+								</p>
+							</div>
+						</div>
+					</li>
 				</ul>
-
+			</div>
 			<ReactModal
 				onRequestClose={() => setModal(false)}
 				style={{
@@ -192,7 +206,7 @@ export const CategorySingle = () => {
 								<input
 									ref={nameRef}
 									type='text'
-									defaultValue={'Valvoline '}
+									defaultValue={product.name}
 									name='floating_email'
 									id='floating_email'
 									className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
@@ -214,6 +228,7 @@ export const CategorySingle = () => {
 									className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 									placeholder=' '
 									required
+									defaultValue={product.description}
 								/>
 								<label
 									htmlFor='floating_password'
@@ -229,6 +244,7 @@ export const CategorySingle = () => {
 									id='floating_repeat_password'
 									className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 									placeholder=' '
+									defaultValue={product.type}
 									required
 								/>
 								<label
@@ -246,6 +262,7 @@ export const CategorySingle = () => {
 										id='floating_first_name'
 										className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 										placeholder=' '
+										defaultValue={product.api}
 									/>
 									<label
 										htmlFor='floating_first_name'
@@ -259,6 +276,7 @@ export const CategorySingle = () => {
 										ref={saeRef}
 										name='floating_last_name'
 										id='floating_last_name'
+										defaultValue={product.sae}
 										className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 										placeholder=' '
 									/>
@@ -279,6 +297,7 @@ export const CategorySingle = () => {
 										className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 										placeholder=' '
 										required
+										defaultValue={product.approvals}
 									/>
 									<label
 										htmlFor='floating_phone'
@@ -295,6 +314,7 @@ export const CategorySingle = () => {
 										className='block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer'
 										placeholder=' '
 										required
+										defaultValue={product.img}
 									/>
 									<label
 										htmlFor='floating_company'

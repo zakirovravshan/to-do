@@ -8,6 +8,8 @@ import { Info } from './pages/Info/Info';
 import { News } from './pages/News/News';
 import { Product } from './pages/Product/Product';
 import { Statistic } from './pages/Statistic/Statistic';
+import { SingleProducts } from './pages/SingleProducts/SingleProducts';
+import './App.css';
 
 export const App = () => {
 	return (
@@ -23,6 +25,10 @@ export const App = () => {
 					<Route path='/statistic' element={<Statistic />} />
 					<Route path='/info' element={<Info />} />
 					<Route path='/news' element={<News />} />
+					<Route
+							path='/product/:categoryId/singleproduct/:id'
+							element={<SingleProducts />}
+						/>
 				</Routes>
 			</div>
 		</div>

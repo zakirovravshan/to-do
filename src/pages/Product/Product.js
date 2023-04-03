@@ -43,8 +43,8 @@ export const Product = () => {
 	}, []);
 
 	return (
-		<div className='bg-slate-200 p-8 h-screen'>
-			<div className='flex items-center justify-between mb-8'>
+		<div  className='bg-slate-200 p-8 h-screen'>
+			<div style={{height:"55px"}} className='flex items-center justify-between mb-8 '>
 				<div className='flex items-center'>
 					<img
 						className='mr-2'

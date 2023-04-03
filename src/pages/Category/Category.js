@@ -285,7 +285,7 @@ export const Category = () => {
 						product.map((el) => (
 							<div>
 								<Link
-									to='/category'
+									to={`/product/1`}
 									key={el.id}
 									className=' border border-b-2 p-3  justify-between    bg-white rounded-xl mb-2 flex items-center hover:shadow-xl transition duration-500'>
 									<div className='flex items-center w-full '>
