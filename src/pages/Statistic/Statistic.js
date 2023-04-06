@@ -11,6 +11,21 @@ export const Statistic = () => {
 	category.map((el) => el.category_name);
 
 	const options = {
+		chart: {
+			animations: {
+				enabled: true,
+				easing: 'easeinout',
+				speed: 800,
+				animateGradually: {
+					enabled: true,
+					delay: 150,
+				},
+				dynamicAnimation: {
+					enabled: true,
+					speed: 350,
+				},
+			},
+		},
 		dataLabels: {
 			enabled: false,
 		},
@@ -52,9 +67,10 @@ export const Statistic = () => {
 				<ul
 					style={{ minHeight: '580px' }}
 					className=' w-full bg-slate-100 p-7 rounded-xl shadow-md flex items-center '>
-						
-					<div className='mx-auto' >
-					<h2 className='mx-auto text-center mb-4 text-2xl font-medium' >Статистика по количеству товаров на сайте</h2>
+					<div className='mx-auto'>
+						<h2 className='mx-auto text-center mb-4 text-2xl font-medium'>
+							Статистика по количеству товаров на сайте
+						</h2>
 						<Chart
 							className='text-center mx-auto'
 							options={options}

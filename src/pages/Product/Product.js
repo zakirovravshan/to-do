@@ -78,7 +78,7 @@ export const Product = () => {
 							</li>
 						))
 					) : (
-						<div className='mx-auto'>
+						<div className='mx-auto   '>
 							<Loader />
 						</div>
 					)}
